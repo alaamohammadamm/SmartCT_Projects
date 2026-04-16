@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TurtleBot Project Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap');
+        
+        :root {
+            --header-height: 70px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: #2c2c2c;
+            background-color: #f9f7f2; /* Warm organic cream */
+            scroll-behavior: smooth;
+            padding-top: var(--header-height);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+            letter-spacing: -0.01em;
+            color: #1a1a1a;
+        }
+
+        /* Global Site Header */
+        .site-header {
+            height: var(--header-height);
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #fdfdfb;
+            border-bottom: 1px solid #e5e0d5;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 1000;
+        }
+
+        .site-logo {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: #1a1a1a;
+            text-decoration: none;
+        }
+
+        .site-logo:hover {
+            opacity: 0.8;
+        }
+
+        .site-nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .site-nav-link {
+            font-size: 0.9rem;
+            color: #6b6b6b;
+            text-decoration: none;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+
+        .site-nav-link:hover {
+            color: #1a1a1a;
+        }
+
+        .site-nav-link.active-site {
+            color: #3d5a45;
+            border-bottom: 2px solid #3d5a45;
+            padding-bottom: 4px;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 260px;
+            height: calc(100vh - var(--header-height));
+            position: fixed;
+            left: 0;
+            top: var(--header-height);
+            background: #f1f0e8;
+            border-right: 1px solid #e5e0d5;
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 0.4rem 0.75rem;
+            margin: 0.1rem 0;
+            color: #6b6b6b;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .nav-link:hover {
+            color: #1a1a1a;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .nav-link.active {
+            color: #3d5a45;
+            font-weight: 600;
+            border-left: 2px solid #3d5a45;
+            padding-left: calc(0.75rem - 2px);
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Content Area */
+        .main-content {
+            margin-left: 260px;
+            padding: 4rem 2rem;
+            max-width: 850px;
+        }
+
+        section {
+            margin-bottom: 5rem;
+        }
+
+        .content-footer-spacer {
+            height: 20vh;
+        }
+
+        pre {
+            background-color: #2e2e2e;
+            color: #d1d1d1;
+            padding: 1.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border: 1px solid #1a1a1a;
+        }
+
+        .image-container {
+            background: #f1f0e8;
+            border: 1px solid #e5e0d5;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 16/10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .fallback-text {
+            color: #8c8c8c;
+            font-size: 0.8rem;
+            font-style: italic;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; padding: 2rem; }
+            .site-header { padding: 0 1rem; }
+            .site-nav { gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Global Site Header -->
+    <header class="site-header">
+        <a href="index.html" class="site-logo">SmartCT Projects</a>
+        <nav class="site-nav">
+            <a href="sorting_machine.html" class="site-nav-link">Sorting Machine</a>
+            <a href="smart_door.html" class="site-nav-link">Smart Door</a>
+            <a href="balloon_pop.html" class="site-nav-link">Balloon Pop</a>
+            <a href="turtle_bot.html" class="site-nav-link active-site">TurtleBot</a>
+        </nav>
+    </header>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="mb-6 px-3">
+            <h2 class="text-xl font-semibold mb-1">Guide Contents</h2>
+        </div>
+        <div class="space-y-1">
+            <a href="#introduction" class="nav-link">TurtleBot3 Label Navigation 🤖</a>
+            <a href="#key-components" class="nav-link">Key Components 🛠️</a>
+            <a href="#how-it-works" class="nav-link">How It Works ⚙️</a>
+            <a href="#reference-images" class="nav-link">Reference Images</a>
+            <a href="#software-setup" class="nav-link">Software Setup</a>
+            <a href="#camera-setup" class="nav-link">Camera Setup and Calibration</a>
+            <a href="#creating-model" class="nav-link">Creating a Model</a>
+            <a href="#running-code" class="nav-link">Running Code</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <header class="mb-12">
+            <h1 class="text-5xl font-semibold mb-4">TurtleBot3 Label Navigation 🤖</h1>
+            <p class="text-lg text-gray-600">Written by: Alaa Mohammad and Carter Holton</p>
+        </header>
+
+        <!-- Introduction -->
+        <section id="introduction">
+            <div class="space-y-4">
+                <p>This is an autonomous robotics project that uses a <strong>TurtleBot3</strong> to navigate its environment by recognizing visual cues. A <strong>Raspberry Pi V2 camera</strong> is mounted on the robot to capture a continuous live video feed, which is processed by a machine learning model to identify specific directional labels.</p>
+                <p>The robot then interprets these labels and uses <strong>ROS2</strong> to execute corresponding commands. For example, recognizing a <strong>forward arrow</strong> triggers a command to move 10 inches forward, while a <strong>right curved arrow</strong> instructs the robot to rotate 90 degrees to the right. This project demonstrates the integration of computer vision and robotics for intelligent, image-based navigation.</p>
+            </div>
+        </section>
+
+        <!-- Key Components -->
+        <section id="key-components">
+            <h2 class="text-3xl font-semibold mb-6">Key Components 🛠️</h2>
+            <ul class="space-y-3 list-none">
+                <li><strong>TurtleBot3:</strong> The mobile robot platform.</li>
+                <li><strong>Raspberry Pi V2 Camera:</strong> Captures real-time images of the environment.</li>
+                <li><strong>Machine Learning Model:</strong> Recognizes and classifies the visual cues (labels).</li>
+                <li><strong>ROS2:</strong> The framework used for sending movement commands to the robot based on the recognized labels.</li>
+                <li><strong>Visual Labels:</strong> Pre-defined images (e.g., arrows) that the model is trained to recognize.</li>
+            </ul>
+        </section>
+
+        <!-- How It Works -->
+        <section id="how-it-works">
+            <h2 class="text-3xl font-semibold mb-6">How It Works ⚙️</h2>
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">1. Image Capture</h3>
+                    <p>The Raspberry Pi V2 camera continuously streams live video to the processing unit.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">2. Visual Recognition</h3>
+                    <p>The live feed is analyzed by the machine learning model, which identifies any of the pre-trained visual labels.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">3. Command Generation</h3>
+                    <p>Based on the recognized label, the system generates a specific movement command (e.g., move forward, turn right).</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">4. Robot Movement</h3>
+                    <p>The command is sent to the TurtleBot3's control system via ROS2, causing the robot to perform the desired action. This entire process allows the robot to make intelligent navigation decisions in real-time.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reference Images -->
+        <section id="reference-images">
+            <h2 class="text-3xl font-semibold mb-6">Reference Images</h2>
+            <div class="flex flex-col gap-8">
+                <div class="image-container">
+                    <img src="turtlebot_pics/setup.png" alt="TurtleBot Setup" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <span class="fallback-text" style="display:none;">[Image: TurtleBot3 with Raspberry Pi Camera]</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Software Setup -->
+        <section id="software-setup">
+            <h2 class="text-3xl font-semibold mb-6">Software Setup</h2>
+            <p class="mb-4">Ensure your Raspberry Pi is running <strong>Raspberry Pi OS Bullseye (64-bit)</strong> with ROS2 Humble or Foxy installed. Standard TurtleBot3 packages must be configured.</p>
+            
+            <h3 class="text-xl font-semibold mb-4">Installing AI Dependencies</h3>
+            <pre># Update system dependencies
+sudo apt-get update
+sudo apt-get install python3-pycoral
+
+# Install CV and ML tools
+pip3 install opencv-contrib-python==4.11.0.86
+pip3 install numpy==1.19.5</pre>
+        </section>
+
+        <!-- Camera Setup -->
+        <section id="camera-setup">
+            <h2 class="text-3xl font-semibold mb-6">Camera Setup and Calibration</h2>
+            <p class="mb-6">The camera must be mounted at a height where it can clearly see the navigation labels on the floor or walls.</p>
+            <ul class="list-disc list-inside mb-8 space-y-2 text-gray-700">
+                <li>Ensure the camera lens is clean and focused using the adjustment tool.</li>
+                <li>Check for glare on the labels, which can interfere with model accuracy.</li>
+                <li>Verify the camera ribbon cable is securely connected to the CSI port.</li>
+            </ul>
+        </section>
+
+        <!-- Creating Model -->
+        <section id="creating-model">
+            <h2 class="text-3xl font-semibold mb-6">Creating a Model</h2>
+            <p class="mb-4">Use Google Teachable Machine to train a model to recognize your specific arrows or labels.</p>
+            <ol class="space-y-4 list-decimal list-inside mb-8">
+                <li>Capture 100+ images for each direction (Forward, Left, Right, Stop).</li>
+                <li>Include a "Background" class for when no label is present.</li>
+                <li>Export the model as <strong>TensorFlow Lite - EdgeTPU</strong>.</li>
+                <li>Deploy the `.tflite` file to the Raspberry Pi.</li>
+            </ol>
+        </section>
+
+        <!-- Running Code -->
+        <section id="running-code">
+            <h2 class="text-3xl font-semibold mb-6">Running Code</h2>
+            <p class="mb-6">The main navigation script coordinates the camera feed with the ROS2 publisher to send Twist messages to the `/cmd_vel` topic.</p>
+            
+            <div class="image-container mb-8">
+                <img src="turtlebot_pics/flowchart.png" alt="Code Logic Flowchart" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <span class="fallback-text" style="display:none;">[Insert Logic Flowchart: Image -> Model -> ROS2 Command]</span>
+            </div>
+            
+            <p class="italic text-gray-600 bg-white p-4 border rounded">Tip: Start with a slow linear velocity (0.05 - 0.1 m/s) until you are sure the vision model is triggering turns correctly.</p>
+        </section>
+
+        <div class="content-footer-spacer"></div>
+
+    </main>
+
+    <script>
+        // Smooth Scroll Logic
+        const smoothScroll = (targetId) => {
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                const headerOffset = 90;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+            }
+        };
+
+        document.querySelectorAll('.nav-link').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId.startsWith('#')) {
+                    e.preventDefault();
+                    smoothScroll(targetId);
+                }
+            });
+        });
+
+        // Scroll Spy Logic
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const scrollPos = window.pageYOffset;
+            const windowHeight = window.innerHeight;
+            const bodyHeight = document.body.offsetHeight;
+
+            if (scrollPos + windowHeight >= bodyHeight - 50) {
+                current = sections[sections.length - 1].getAttribute('id');
+            } else {
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (scrollPos >= sectionTop - 180) {
+                        current = section.getAttribute('id');
+                    }
+                });
+            }
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

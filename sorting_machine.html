@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Machine Project Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap');
+
+        :root {
+            --header-height: 70px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: #2c2c2c;
+            background-color: #f9f7f2; /* Warm organic cream */
+            scroll-behavior: smooth;
+            padding-top: var(--header-height);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+            letter-spacing: -0.01em;
+            color: #1a1a1a;
+        }
+
+        /* Global Site Header */
+        .site-header {
+            height: var(--header-height);
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #fdfdfb;
+            border-bottom: 1px solid #e5e0d5;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 1000;
+        }
+
+        .site-logo {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: #1a1a1a;
+            text-decoration: none;
+        }
+
+            .site-logo:hover {
+                opacity: 0.8;
+            }
+
+        .site-nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .site-nav-link {
+            font-size: 0.9rem;
+            color: #6b6b6b;
+            text-decoration: none;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+
+            .site-nav-link:hover {
+                color: #1a1a1a;
+            }
+
+            .site-nav-link.active-site {
+                color: #3d5a45;
+                border-bottom: 2px solid #3d5a45;
+                padding-bottom: 4px;
+            }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 260px;
+            height: calc(100vh - var(--header-height));
+            position: fixed;
+            left: 0;
+            top: var(--header-height);
+            background: #f1f0e8;
+            border-right: 1px solid #e5e0d5;
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 0.4rem 0.75rem;
+            margin: 0.1rem 0;
+            color: #6b6b6b;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+            .nav-link:hover {
+                color: #1a1a1a;
+                background: rgba(255, 255, 255, 0.5);
+            }
+
+            .nav-link.active {
+                color: #3d5a45;
+                font-weight: 600;
+                border-left: 2px solid #3d5a45;
+                padding-left: calc(0.75rem - 2px);
+                background: rgba(255, 255, 255, 0.8);
+            }
+
+        /* Content Area */
+        .main-content {
+            margin-left: 260px;
+            padding: 4rem 2rem;
+            max-width: 850px;
+        }
+
+        section {
+            margin-bottom: 5rem;
+        }
+
+        /* Add padding at the bottom to ensure the last section can be scrolled to comfortably */
+        .content-footer-spacer {
+            height: 20vh;
+        }
+
+        pre {
+            background-color: #2e2e2e;
+            color: #d1d1d1;
+            padding: 1.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border: 1px solid #1a1a1a;
+        }
+
+        .image-container {
+            background: #f1f0e8;
+            border: 1px solid #e5e0d5;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 16/10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+            .image-container img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .fallback-text {
+            color: #8c8c8c;
+            font-size: 0.8rem;
+            font-style: italic;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 2rem;
+            }
+
+            .site-header {
+                padding: 0 1rem;
+            }
+
+            .site-nav {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Global Site Header -->
+    <header class="site-header">
+        <a href="index.html" class="site-logo">SmartCT Projects</a>
+        <nav class="site-nav">
+            <a href="sorting_machine.html" class="site-nav-link active-site">Sorting Machine</a>
+            <a href="smart_door.html" class="site-nav-link">Smart Door</a>
+            <a href="balloon_pop.html" class="site-nav-link">Balloon Pop</a>
+            <a href="turtle_bot.html" class="site-nav-link">TurtleBot</a>
+        </nav>
+    </header>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="mb-6 px-3">
+            <h2 class="text-xl font-semibold mb-1">Guide Contents</h2>
+        </div>
+        <div class="space-y-1">
+            <a href="#introduction" class="nav-link">Introduction</a>
+            <a href="#reference-images" class="nav-link">Reference Images</a>
+            <a href="#parts-used" class="nav-link">Parts Used</a>
+            <a href="#physical-setup" class="nav-link">Physical Setup</a>
+            <a href="#software-setup" class="nav-link">Software Setup</a>
+            <a href="#camera-setup" class="nav-link">Camera Setup and Calibration</a>
+            <a href="#creating-model" class="nav-link">Creating a Model</a>
+            <a href="#hardware-setup" class="nav-link">Hardware Setup</a>
+            <a href="#running-code" class="nav-link">Running Code</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <header class="mb-12">
+            <h1 class="text-5xl font-semibold mb-4">Sorting Machine Project Guide</h1>
+            <p class="text-lg text-gray-600">Written by: Alaa Mohammad and Carter Holton</p>
+        </header>
+
+        <!-- Introduction -->
+        <section id="introduction">
+            <h2 class="text-3xl font-semibold mb-6">Introduction</h2>
+            <div class="space-y-4">
+                <p>This robotics project focuses on building a device that sorts two different objects using a machine‑learning model from Google Teachable Machine. This prototype features an automatic feeding system that continuously drops red and yellow balls down a spiral, where they are identified and sorted. A high‑torque DC motor drives the feeding mechanism, while a Raspberry Pi Camera V2 mounted on the side continuously captures images. These images are fed into a machine‑learning model, which then signals two servo motors to physically sort the objects.</p>
+                <p>This guide describes our specific prototype, but the concepts and steps are applicable to many custom designs.</p>
+            </div>
+        </section>
+
+        <!-- Reference Images -->
+        <section id="reference-images">
+            <h2 class="text-3xl font-semibold mb-6">Reference Images</h2>
+            <div class="flex flex-col gap-8">
+                <div class="image-container">
+                    <img src="guide_pics/1.jpg" alt="Sorting Machine View 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <span class="fallback-text" style="display:none;">[Image 1: Reference View]</span>
+                </div>
+                <div class="image-container">
+                    <img src="guide_pics/2.jpg" alt="Sorting Machine View 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <span class="fallback-text" style="display:none;">[Image 2: Reference View]</span>
+                </div>
+                <div class="image-container">
+                    <img src="guide_pics/3.jpg" alt="Sorting Machine View 3" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <span class="fallback-text" style="display:none;">[Image 3: Reference View]</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Parts Used -->
+        <section id="parts-used">
+            <h2 class="text-3xl font-semibold mb-8">Parts Used</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Essentials</h3>
+                    <ul class="space-y-1 text-sm list-disc list-inside">
+                        <li>CanaKit Raspberry Pi 4 (4GB) Starter PRO Kit</li>
+                        <li>Display monitor</li>
+                        <li>Wireless keyboard & mouse</li>
+                        <li>Long camera cables</li>
+                        <li>Raspberry Pi Camera Module V2</li>
+                        <li>Coral USB Accelerator</li>
+                        <li>USB Flash Drive</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Hardware / Electronics</h3>
+                    <ul class="space-y-1 text-sm list-disc list-inside">
+                        <li>12V DC power supply</li>
+                        <li>Jumper wires</li>
+                        <li>Small breadboard</li>
+                        <li>White LED (optional)</li>
+                        <li>Servo motors (2)</li>
+                        <li>DC motor</li>
+                        <li>Voltage regulator</li>
+                        <li>Potentiometer</li>
+                        <li>Screwdriver</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">DIY / Fabrication</h3>
+                    <ul class="space-y-1 text-sm list-disc list-inside">
+                        <li>Hot glue gun</li>
+                        <li>Cardboard</li>
+                        <li>Digital caliper</li>
+                        <li>Plexiglass</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Physical Setup -->
+        <section id="physical-setup">
+            <h2 class="text-3xl font-semibold mb-6">Physical Setup</h2>
+            <p class="mb-8 italic text-gray-600">Most of our build was 3D‑printed, but a 3D printer is not strictly required. Alternative DIY material can be used to construct the device.</p>
+
+            <h3 class="text-xl font-semibold mb-4">Main Components</h3>
+            <div class="space-y-4">
+                <p><strong>Dropping Mechanism:</strong> A DC motor drives an Archimedes spiral that feeds the red and yellow balls at a controlled pace. The balls move down a spiral until they are stopped at the trapdoor.</p>
+                <p><strong>Trapdoor Arm:</strong> One servo motor holds the object in place until a clear image frame has been captured by the camera. After a prediction has been made, the trapdoor arm lifts up to allow the ball to fall through to the sorting arm.</p>
+                <p><strong>Camera:</strong> The camera is mounted to the side of the trapdoor arm to capture images of the balls.</p>
+                <p><strong>Sorting Arm:</strong> A second servo motor physically moves the balls left or right based on the prediction from the machine‑learning model.</p>
+                <p><strong>Buckets:</strong> Buckets are placed beneath the sorting arm to collect the sorted objects.</p>
+            </div>
+        </section>
+
+        <!-- Software Setup -->
+        <section id="software-setup">
+            <h2 class="text-3xl font-semibold mb-6">Software Setup</h2>
+            <p class="mb-4">Follow the official Raspberry Pi documentation to install Raspberry Pi OS on your Raspberry Pi 4. Make sure to install <strong><a href="https://downloads.raspberrypi.com/raspios_oldstable_arm64/images/raspios_oldstable_arm64-2024-10-28/2024-10-22-raspios-bullseye-arm64.img.xz" class="text-emerald-700 underline">Raspberry Pi OS Bullseye (2024-10-22)</a></strong> (not Bookworm or Buster). After installation, complete the standard setup process.</p>
+            <p class="mb-4 font-semibold">Required Software Versions:</p>
+            <ul class="list-disc list-inside mb-8 space-y-1 text-sm">
+                <li>OpenCV: 4.11.0.86</li>
+                <li>NumPy: 1.19.5</li>
+                <li>Picamera2: 0.3.12</li>
+            </ul>
+
+            <h3 class="text-xl font-semibold mb-4">Installing Packages</h3>
+            <p class="mb-4">Begin in the home directory and ensure you are in the base environment. Run the following commands <strong>exactly as shown</strong>:</p>
+            <pre># 1. Add the Coral Repo and Key
+echo "deb https://packages.cloud.google.com/apt coral-edgetpu-stable main" | sudo tee /etc/apt/sources.list.d/coral-edgetpu.list
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+
+# 2. Update and install system dependencies
+sudo apt-get update
+sudo apt-get install python3-pycoral
+
+# 3. Install Python dependencies 
+pip3 install picamera2==0.3.12
+pip3 install opencv-contrib-python==4.11.0.86
+pip3 install numpy==1.19.5</pre>
+            <p class="text-sm bg-amber-50 border-l-4 border-amber-400 p-4 text-amber-800">Note: You may see errors regarding certain “coral cloud” packages; ignore them as long as the install completes. If you run into additional issues, consult the Teachable Sorter | Coral documentation.</p>
+
+            <h3 class="text-xl font-semibold mt-10 mb-4">Verify Installation</h3>
+            <p class="mb-2">To check that your library versions are correctly installed, run the following commands in the terminal:</p>
+            <pre>python3 -c "import cv2, numpy; print(f'OpenCV: {cv2.__version__}\nNumPy: {numpy.__version__}')"
+apt policy python3-picamera2</pre>
+            <p class="text-sm bg-amber-50 border-l-4 border-amber-400 p-4 text-amber-800"><strong>Note:</strong> If your downloads still fail, ensure you're connected and that your time and date settings are up to date.</p>
+        </section>
+
+        <!-- Camera Setup -->
+        <section id="camera-setup">
+            <h2 class="text-3xl font-semibold mb-6">Camera Setup and Calibration</h2>
+            <p class="mb-6">The Raspberry Pi Camera V2 is used in this project. For reliable performance, ensure:</p>
+            <ul class="list-disc list-inside mb-8 space-y-2">
+                <li>Adequate lighting is present</li>
+                <li>The camera is at least 2 inches away from the object</li>
+                <li>The camera is mounted securely with no movement</li>
+            </ul>
+
+            <h3 class="text-xl font-semibold mb-4">Connecting and Focusing</h3>
+            <p class="mb-4">Connect the camera to the Raspberry Pi using the white ribbon cable. <strong>Always power off the Raspberry Pi before connecting or disconnecting the camera.</strong></p>
+            <p class="mb-4">Included with your camera is a white circular focusing tool. Place the narrow end over the lens of the camera and twist until your image is sharp.</p>
+
+            <h3 class="text-xl font-semibold mt-8 mb-4">Camera Settings</h3>
+            <p>The camera uses auto‑exposure, which may cause overexposed images in low‑light or enclosed environments. To resolve this, you can manually set exposure and gain values in your code to achieve consistent, correctly exposed images. You can view the exposure and gain values we set in our code at the top of the main file. </p>
+        </section>
+
+        <!-- Creating Model -->
+        <section id="creating-model">
+            <h2 class="text-3xl font-semibold mb-6">Creating a Model</h2>
+            <p class="mb-4">Once your physical setup is complete, manually place objects at the trapdoor location to collect training images. Run the script <code>training.py</code> and follow the instructions displayed in the terminal. Be sure to collect images of all objects as well as background images with no objects present. Transfer these images to a device where you can access the internet.</p>
+
+            <h3 class="text-xl font-semibold mb-4">Training the Model</h3>
+            <ol class="space-y-4 list-decimal list-inside mb-8">
+                <li>Go to <a href="https://teachablemachine.withgoogle.com" target="_blank" class="text-emerald-700 underline">teachablemachine.withgoogle.com</a> and create an Image Project.</li>
+                <li>Create 3 classes: <strong>"Red"</strong>, <strong>"Yellow"</strong>, and <strong>"Background"</strong>. You can use your different labels so long as you change the labeling variables in code. </li>
+                <li>Upload your samples to each class and click "Train Model."</li>
+                <li>Test the model’s accuracy using the preview panel.</li>
+            </ol>
+
+            <h3 class="text-xl font-semibold mb-4">Exporting the Model</h3>
+            <ol class="space-y-4 list-decimal list-inside mb-8">
+                <li>Click "Export Model" and select the "TensorFlow Lite" tab.</li>
+                <li>Choose <strong>EdgeTPU</strong> as the model conversion type and click "Download my model."</li>
+                <li>Transfer the resulting .zip file to your Raspberry Pi via a USB flash drive or cloud storage.</li>
+                <li>Unzip your zip file in model_files after you've finished downloading your code from github in the Running Code section.</li>
+            </ol>
+
+            <h3 class="text-xl font-semibold mb-4">Retraining Tips</h3>
+            <ul class="list-disc list-inside space-y-2">
+                <li>Add more high‑quality sample images showing multiple angles of each object.</li>
+                <li>Review existing images and remove blurry or low‑quality frames.</li>
+                <li>Increase the number of training epochs using the Advanced dropdown on the Teachable Machine website and retrain the model.</li>
+            </ul>
+        </section>
+
+        <!-- Hardware Setup -->
+        <section id="hardware-setup">
+            <h2 class="text-3xl font-semibold mb-6">Hardware Setup</h2>
+            <p class="mb-8">To fully operate the project, all hardware components must be correctly wired and powered. Refer to the figure below for the overall diagram for all components:</p>
+
+            <div class="image-container mb-8" style="aspect-ratio: 16/9;">
+                <img src="guide_pics/schematic.png" alt="Figure 5 Circuit Schematic" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <span class="fallback-text" style="display:none;">Figure 5: Overall circuit schematic (12V supply, regulator, DC motor, potentiometer, servos)</span>
+            </div>
+
+            <h3 class="font-semibold text-lg mb-2">Breadboard Overview</h3>
+            <p class="mb-4">All electrical connections are made on a breadboard. If you are unfamiliar with breadboards, watch the following overview video:</p>
+            <p class="mb-10"><a href="https://youtu.be/6WReFkfrUIk" class="text-emerald-700 underline">https://youtu.be/6WReFkfrUIk</a></p>
+
+            <div class="space-y-8">
+                <div>
+                    <h3 class="font-semibold text-lg mb-2">Power Supply to Potentiometer</h3>
+                    <p>Designate one breadboard rail as the 12V supply (the other will later be used for 5V). Connect the 12V power supply to the breadboard, then connect it to the potentiometer. Always check the labels on the components before making connections.</p>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg mb-2">Potentiometer to DC Motor</h3>
+                    <p>Connect the potentiometer output to the DC motor. The motor should now rotate, and its speed should be adjustable via the potentiometer.</p>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg mb-2">Voltage Regulator Connection</h3>
+                    <p>Provide 12V input to the voltage regulator. Verify pin labels carefully to avoid damage.</p>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg mb-2">Regulator to Servos</h3>
+                    <p>Use the voltage regulator’s 5V output to power the servo motors. Connect this 5V output to a breadboard rail and use it as the servo power source. <strong>Do not</strong> connect the orange/yellow signal wire to anything yet; this will later connect to the Raspberry Pi for control.</p>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg mb-2">White LED (Optional)</h3>
+                    <p>Use the raspberry pi’s 3.3V output to power an optional white LED to illuminate your objects for a clear camera view.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Running Code -->
+        <section id="running-code">
+            <h2 class="text-3xl font-semibold mb-6">Running Code</h2>
+            <p class="mb-6">Download the code repository from <strong><a href="https://github.com/alaamohammadamm/Sorting-Machine" target="_blank" class="text-emerald-700 underline">GitHub</a></strong>, which should contain 2 folders:</p>
+            <ul class="list-disc list-inside mb-8 space-y-2">
+                <li>The folder named <strong>"main"</strong> will be the directory for your main sorting program. It contains main.py, module files, and a folder containing the model files we created for our prototype. Remember to replace the files in the model_files folder 
+                    with the files you've created for your model. </li>
+                <li>The folder named <strong>"training"</strong> will contain a single training script that you can run to collect training images as discussed previously.</li>
+            </ul>
+
+            <h3 class="text-xl font-semibold mb-4">Logic Flowchart</h3>
+            <p class="mb-6">The following flowchart illustrates the logical sequence the sorting program follows, from image capture to motor actuation:</p>
+            <div class="image-container mb-8">
+                <img src="guide_pics/flowchart.png" alt="Code Logic Flowchart" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <span class="fallback-text" style="display:none;">[Insert Logic Flowchart Image Here]</span>
+            </div>
+
+            <p class="mb-4">You may need to alter values in code such as degree of movement, class names, and exposure, so that the program is geared towards your class names and build.</p>
+            <p class="font-medium">More: If you’re feeling confident in tackling this project, it is also possible to alter the code to include sorting for multiple classes.</p>
+        </section>
+
+        <!-- Spacer to allow last section to be high enough for scrollspy logic -->
+        <div class="content-footer-spacer"></div>
+
+    </main>
+
+    <script>
+        // Smooth Scroll Logic
+        const smoothScroll = (targetId) => {
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                const headerOffset = 90;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+            }
+        };
+
+        document.querySelectorAll('.nav-link').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId.startsWith('#')) {
+                    e.preventDefault();
+                    smoothScroll(targetId);
+                }
+            });
+        });
+
+        // Improved Scroll Spy
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const scrollPos = window.pageYOffset;
+            const windowHeight = window.innerHeight;
+            const bodyHeight = document.body.offsetHeight;
+
+            // Check if we've reached the bottom of the page
+            if (scrollPos + windowHeight >= bodyHeight - 50) {
+                current = sections[sections.length - 1].getAttribute('id');
+            } else {
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (scrollPos >= sectionTop - 180) {
+                        current = section.getAttribute('id');
+                    }
+                });
+            }
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

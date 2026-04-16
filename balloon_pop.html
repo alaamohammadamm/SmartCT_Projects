@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balloon Pop Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap');
+        
+        :root {
+            --header-height: 70px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: #2c2c2c;
+            background-color: #f9f7f2;
+            scroll-behavior: smooth;
+            padding-top: var(--header-height);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+            letter-spacing: -0.01em;
+            color: #1a1a1a;
+        }
+
+        .site-header {
+            height: var(--header-height);
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #fdfdfb;
+            border-bottom: 1px solid #e5e0d5;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 1000;
+        }
+
+        .site-logo {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: #1a1a1a;
+            text-decoration: none;
+        }
+
+        .site-nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .site-nav-link {
+            font-size: 0.9rem;
+            color: #6b6b6b;
+            text-decoration: none;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+
+        .site-nav-link:hover {
+            color: #1a1a1a;
+        }
+
+        .site-nav-link.active-site {
+            color: #3d5a45;
+            border-bottom: 2px solid #3d5a45;
+            padding-bottom: 4px;
+        }
+
+        .sidebar {
+            width: 260px;
+            height: calc(100vh - var(--header-height));
+            position: fixed;
+            left: 0;
+            top: var(--header-height);
+            background: #f1f0e8;
+            border-right: 1px solid #e5e0d5;
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 0.4rem 0.75rem;
+            margin: 0.1rem 0;
+            color: #6b6b6b;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .nav-link:hover {
+            color: #1a1a1a;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .nav-link.active {
+            color: #3d5a45;
+            font-weight: 600;
+            border-left: 2px solid #3d5a45;
+            padding-left: calc(0.75rem - 2px);
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .main-content {
+            margin-left: 260px;
+            padding: 4rem 2rem;
+            max-width: 850px;
+        }
+
+        section {
+            margin-bottom: 5rem;
+        }
+
+        pre {
+            background-color: #2e2e2e;
+            color: #d1d1d1;
+            padding: 1.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border: 1px solid #1a1a1a;
+        }
+
+        .video-container {
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            width: 100%;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .image-placeholder {
+            background: #f1f0e8;
+            border: 1px solid #e5e0d5;
+            border-radius: 8px;
+            aspect-ratio: 4/3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8c8c8c;
+            font-size: 0.8rem;
+            font-style: italic;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; padding: 2rem; }
+            .image-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Global Site Header -->
+    <header class="site-header">
+        <a href="index.html" class="site-logo">SmartCT Projects</a>
+        <nav class="site-nav">
+            <a href="sorting_machine.html" class="site-nav-link">Sorting Machine</a>
+            <a href="smart_door.html" class="site-nav-link">Smart Door</a>
+            <a href="balloon_pop.html" class="site-nav-link active-site">Balloon Pop</a>
+            <a href="turtle_bot.html" class="site-nav-link">TurtleBot</a>
+        </nav>
+    </header>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="mb-6 px-3">
+            <h2 class="text-xl font-semibold mb-1">Project Info</h2>
+        </div>
+        <div class="space-y-1">
+            <a href="#overview" class="nav-link">Overview</a>
+            <a href="#media-showcase" class="nav-link">Media Showcase</a>
+            <a href="#parts-used" class="nav-link">Parts Used</a>
+            <a href="#how-it-works" class="nav-link">How It Works</a>
+            <a href="#software-setup" class="nav-link">Software Setup</a>
+            <a href="#code-implementation" class="nav-link">Code Implementation</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="mb-12">
+            <h1 class="text-5xl font-semibold mb-4">Balloon Pop</h1>
+            <p class="text-lg text-gray-600">Written by: Alaa Mohammad and Carter Holton</p>
+        </header>
+
+        <section id="overview">
+            <h2 class="text-3xl font-semibold mb-6">Overview</h2>
+            <div class="space-y-4">
+                <p>Balloon Pop is an interactive projection-based game developed to demonstrate the integration of computer vision and real-time machine learning. Players physically throw a ball at a projected screen, and the system detects the impact to "pop" virtual balloons. 
+                By leveraging a Raspberry Pi 4 and the Coral Edge TPU, the game maintains high frame rates while performing complex hit-detection logic and visual state updates.</p>
+            </div>
+        </section>
+
+        <section id="media-showcase">
+            <h2 class="text-3xl font-semibold mb-6">Media Showcase</h2>
+            <div class="video-container">
+                <video controls class="w-full h-full">
+                    <source src="balloon_game_pics/demo.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="image-grid">
+                <div class="image-placeholder">
+                    [Physical Setup Image]
+                </div>
+                <div class="image-placeholder">
+                    [Projection Area Image]
+                </div>
+            </div>
+        </section>
+
+        <!-- Parts Used -->
+        <section id="parts-used">
+            <h2 class="text-3xl font-semibold mb-8">Parts Used</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Essentials</h3>
+                    <ul class="space-y-1 text-sm list-disc list-inside">
+                        <li>CanaKit Raspberry Pi 4 (4GB) Starter PRO Kit</li>
+                        <li>Display monitor</li>
+                        <li>Wireless keyboard & mouse</li>
+                        <li>HD 1080p Webcam</li>
+                        <li>Coral USB Accelerator</li>
+                        <li>USB Flash Drive</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Computer Vision</h3>
+                    <ul class="space-y-1 text-sm list-disc list-inside">
+                        <li>HD 1080p Webcam</li>
+                        <li>1080p? Projector</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works">
+            <h2 class="text-3xl font-semibold mb-6">How It Works ⚙️</h2>
+            <div class="space-y-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Step 1: Image Capture</h3>
+                    <p class="text-gray-700">The system captures high-frequency frames via the <strong>Raspberry Pi V2 Camera</strong>, providing a constant visual stream of the projection area.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Step 2: Dynamic Cropping</h3>
+                    <p class="text-gray-700">The image analysis code identifies the exact coordinates of every "floating" balloon on screen. It then crops individual sub-images of these balloons from the main camera feed to isolate them for processing.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Step 3: ML Prediction</h3>
+                    <p class="text-gray-700">These cropped images are passed into a machine learning model. The model analyzes the crop to detect the presence of a <strong>black ball</strong>. If the ball is detected within the balloon's boundaries, the model returns a "hit" prediction.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Step 4: Screen Update</h3>
+                    <p class="text-gray-700">Based on the prediction, the game engine updates the visual display: it either advances the balloon one frame upward or triggers the "pop" sequence and removes the balloon from play.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Software Setup -->
+        <section id="software-setup">
+            <h2 class="text-3xl font-semibold mb-6">Software Setup</h2>
+            <p class="mb-4">Follow the official Raspberry Pi documentation to install Raspberry Pi OS on your Raspberry Pi 4. Make sure to install <strong><a href="https://downloads.raspberrypi.com/raspios_oldstable_arm64/images/raspios_oldstable_arm64-2024-10-28/2024-10-22-raspios-bullseye-arm64.img.xz" class="text-emerald-700 underline">Raspberry Pi OS Bullseye (2024-10-22)</a></strong> (not Bookworm or Buster). After installation, complete the standard setup process.</p>
+            <p class="mb-4 font-semibold">Required Software Versions:</p>
+            <ul class="list-disc list-inside mb-8 space-y-1 text-sm">
+                <li>OpenCV: 4.11.0.86</li>
+                <li>NumPy: 1.19.5</li>
+                <li>PygGame: 1.9.6</li>
+                <li>Screeninfo: 0.8.1</li>
+            </ul>
+
+            <h3 class="text-xl font-semibold mb-4">Installing Packages</h3>
+            <p class="mb-4">Begin in the home directory and ensure you are in the base environment. Run the following commands <strong>exactly as shown</strong>:</p>
+            <pre># 1. Add the Coral Repo and Key
+echo "deb https://packages.cloud.google.com/apt coral-edgetpu-stable main" | sudo tee /etc/apt/sources.list.d/coral-edgetpu.list
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+
+# 2. Update and install system dependencies
+sudo apt-get update
+sudo apt-get install python3-pycoral
+
+# 3. Install Python dependencies 
+pip3 install opencv-contrib-python==4.11.0.86
+pip3 install numpy==1.19.5
+pip3 install pygame==1.9.6
+pip3 install screeninfo==0.8.1
+
+</pre>
+            <p class="text-sm bg-amber-50 border-l-4 border-amber-400 p-4 text-amber-800">Note: You may see errors regarding certain “coral cloud” packages; ignore them as long as the install completes. If you run into additional issues, consult the Teachable Sorter | Coral documentation.</p>
+
+            <h3 class="text-xl font-semibold mt-10 mb-4">Verify Installation</h3>
+            <p class="mb-2">To check that your library versions are correctly installed, run the following commands in the terminal:</p>
+            <pre>python3 -c "import cv2, numpy, pygame; print(f'OpenCV: {cv2.__version__}\nNumPy: {numpy.__version__}\nPygame: {pygame.version.ver}')" 
+pip3 show screeninfo</pre>
+            <p class="text-sm bg-amber-50 border-l-4 border-amber-400 p-4 text-amber-800"><strong>Note:</strong> If your downloads still fail, ensure you're connected and that your time and date settings are up to date.</p>
+        </section>
+
+        <section id="code-implementation">
+            <h2 class="text-3xl font-semibold mb-6">Code Implementation</h2>
+            <p class="mb-4">The following abstracted code snippet demonstrates the core logic for hit detection and score updating within the Pygame loop. The complete source code can be downloaded from <strong><a href="https://github.com/alaamohammadamm/Balloon_Pop.git" target="_blank" class="text-emerald-700 underline">GitHub</a></strong>. To start the game, run the main.py file.</p>
+            <pre>
+while not Game.quit_game:
+    Game.step()  # Advance game state (balloon movement)
+
+    # 1. Capture and Perspective Correction
+    ret, frame = videoCapture.read()
+    img = calibrate_frame(frame)
+
+    # 2. Object Detection
+    contours = FindBalloons.find_contours(img)
+    cropped_image, is_balloon = FindBalloons.crop_objects(img, contours)
+
+    # 3. Logic & Interaction
+    if is_balloon:
+        # ML model decides if the detected object is a valid "pop" action
+        result = model.assess(cropped_image)
+        
+        # Trigger pop if model is positive and balloon is in valid Y-range
+        if result and (result != prev_result) and (-140 < Game.y_pos < 900):
+            Game.pop()
+        
+        prev_result = result
+
+    if Game.restart_game:
+        game_init(Game)
+            </pre>
+        </section>
+
+        <div class="content-footer-spacer"></div>
+    </main>
+
+    <script>
+        // Smooth Scroll
+        document.querySelectorAll('.nav-link').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                const headerOffset = 90;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+            });
+        });
+
+        // Scroll Spy
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const scrollPos = window.pageYOffset;
+            sections.forEach(section => {
+                if (scrollPos >= section.offsetTop - 180) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
